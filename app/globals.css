@@ -1,0 +1,206 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 10, 10, 15;
+  --background-end-rgb: 5, 5, 7;
+  --neon-blue: #00f3ff;
+  --neon-purple: #bf00ff;
+  --neon-pink: #ff00ff;
+  --neon-green: #00ff9d;
+  --neon-yellow: #fff700;
+  --cyber-darker: #0a0b1e;
+  --cyber-dark: #141629;
+  --cyber-light: #1e2040;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+    to bottom,
+    rgb(var(--background-start-rgb)),
+    rgb(var(--background-end-rgb))
+  );
+}
+
+.glass-panel {
+  @apply bg-opacity-10 bg-white backdrop-blur-glass border border-opacity-20 border-white rounded-xl;
+}
+
+.neon-text {
+  @apply text-neon-blue;
+  text-shadow: 0 0 5px theme('colors.neon.blue'),
+               0 0 10px theme('colors.neon.blue'),
+               0 0 15px theme('colors.neon.blue');
+}
+
+.neon-border {
+  @apply border border-neon-blue;
+  box-shadow: 0 0 5px theme('colors.neon.blue'),
+              0 0 10px theme('colors.neon.blue'),
+              inset 0 0 5px theme('colors.neon.blue');
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--cyber-darker);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, var(--neon-blue), var(--neon-purple));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, var(--neon-purple), var(--neon-pink));
+}
+
+/* Glass Panel */
+.glass-panel-futuristic {
+  background: rgba(20, 22, 41, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 243, 255, 0.1);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px 0 rgba(0, 243, 255, 0.1);
+}
+
+/* Cyber Grid */
+.bg-cyber-grid {
+  background-image: 
+    linear-gradient(to right, rgba(0, 243, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 243, 255, 0.1) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Matrix Rain Effect */
+.matrix-rain {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, 
+    rgba(0, 243, 255, 0.1) 0%,
+    rgba(191, 0, 255, 0.1) 50%,
+    rgba(255, 0, 255, 0.1) 100%
+  );
+  mask-image: repeating-linear-gradient(0deg, 
+    #000 0px,
+    #000 1px,
+    transparent 2px,
+    transparent 4px
+  );
+  animation: matrix-rain 20s linear infinite;
+  opacity: 0.5;
+}
+
+@keyframes matrix-rain {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+/* Hologram Texture */
+.bg-hologram-texture {
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(0, 243, 255, 0.1) 0px,
+    rgba(0, 243, 255, 0) 1px,
+    rgba(0, 243, 255, 0.1) 2px
+  );
+  background-size: 4px 4px;
+}
+
+/* Shimmer Animation */
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 6s ease-in-out infinite;
+  background-size: 200% auto;
+}
+
+/* Hologram Animation */
+@keyframes hologram {
+  0% {
+    opacity: 0.2;
+    transform: translateY(-1px);
+  }
+  50% {
+    opacity: 0.3;
+    transform: translateY(1px);
+  }
+  100% {
+    opacity: 0.2;
+    transform: translateY(-1px);
+  }
+}
+
+.animate-hologram {
+  animation: hologram 4s ease-in-out infinite;
+}
+
+/* Pulse Animation */
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 3s ease-in-out infinite;
+}
+
+/* Glow Effect */
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(0, 243, 255, 0.5),
+                0 0 20px rgba(0, 243, 255, 0.3),
+                0 0 30px rgba(0, 243, 255, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.5),
+                0 0 30px rgba(0, 243, 255, 0.3),
+                0 0 40px rgba(0, 243, 255, 0.1);
+  }
+}
+
+.animate-glow {
+  animation: glow 3s ease-in-out infinite;
+}
+
+/* Selection Color */
+::selection {
+  background: var(--neon-blue);
+  color: var(--cyber-darker);
+}
+
+/* Focus Outline */
+:focus {
+  outline: 2px solid var(--neon-blue);
+  outline-offset: 2px;
+}
+
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+}
