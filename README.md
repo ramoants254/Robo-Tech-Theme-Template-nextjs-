@@ -1,169 +1,98 @@
-# Robo-Tech: Modern Robot Showcase Platform
+# RoboTech - Modern Robotics Company Template
 
-A cutting-edge Next.js application for showcasing robots with modern UI/UX, animations, and full API integration.
+![RoboTech Preview](public/preview.jpg)
 
-## 🚀 Features
+## 🌟 Key Features
 
-- **Modern Tech Stack**
-  - Next.js 13+ with App Router
-  - TypeScript for type safety
-  - Tailwind CSS for styling
-  - Framer Motion for animations
-  - Zustand for state management
+- ⚡ Built with Next.js 13+ (App Router)
+- 💎 TypeScript for robust development
+- 🎨 Tailwind CSS for modern styling
+- 🌟 Framer Motion animations
+- 📱 Fully responsive design
+- 🔍 SEO optimized
+- 🔒 Security headers configured
+- 🎯 Performance optimized
+- ♿ WCAG 2.1 Accessible
+- 📚 Comprehensive documentation
+- 🛠️ Easy customization
+- 💫 Modern UI components
+- 🔄 Regular updates
+- 📧 Premium support
 
-- **Advanced UI Components**
-  - 3D Robot Cards with tilt effect
-  - Interactive showcase with smooth transitions
-  - Responsive design for all devices
-  - Loading states and animations
-  - Glassmorphism effects
+## 🚀 Quick Start
 
-- **Full API Integration**
-  - RESTful API endpoints
-  - Error handling
-  - Loading states
-  - Type-safe API calls
-
-- **Developer Experience**
-  - Jest testing setup
-  - TypeScript support
-  - Code formatting
-  - API documentation
-  - Component documentation
-
-## 🛠️ Installation
-
-1. Clone the repository:
-\`\`\`bash
-git clone https://github.com/yourusername/robo-tech.git
-\`\`\`
-
-2. Install dependencies:
-\`\`\`bash
+1. Install dependencies:
+```bash
 npm install
-\`\`\`
+# or
+yarn install
+```
 
-3. Run the development server:
-\`\`\`bash
+2. Run development server:
+```bash
 npm run dev
-\`\`\`
+# or
+yarn dev
+```
+
+3. Open [http://localhost:3000](http://localhost:3000)
 
 ## 📚 Documentation
 
-### Component Structure
+Detailed documentation is available in the `docs` folder:
+- [Full Documentation](docs/documentation.md)
+- [Component Guide](docs/components.md)
+- [Customization Guide](docs/customization.md)
 
-- `RobotShowcase`: Main showcase component
-- `RobotCard`: Individual robot card with 3D effects
-- `ParticleBackground`: Animated background
-- `FloatingElement`: Reusable floating animation
+## 🎯 Use Cases
 
-### API Routes
+Perfect for:
+- Robotics Companies
+- Tech Startups
+- AI/ML Companies
+- Innovation Labs
+- Research Institutions
+- Tech Product Showcases
 
-- `GET /api/robots`: Get all robots
-- `GET /api/robots/:id`: Get specific robot
-- `POST /api/robots`: Create new robot
-- `PATCH /api/robots/:id`: Update robot status
+## 🛠️ Built With
 
-### State Management
+- Next.js 13+
+- TypeScript
+- Tailwind CSS
+- Framer Motion
+- React 18
+- ESLint
+- Prettier
 
-Using Zustand for global state:
-\`\`\`typescript
-const { robots, selectedRobot, fetchRobots } = useRobotStore();
-\`\`\`
+## 📱 Cross-Browser Support
 
-### Testing
+Tested and optimized for:
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
+- Edge (latest)
+- Mobile browsers
 
-Run tests:
-\`\`\`bash
-npm test           # Run all tests
-npm run test:watch # Watch mode
-npm run test:coverage # Coverage report
-\`\`\`
+## 🔧 Support
 
-## 🎨 Customization
+Premium support available:
+- Email: support@example.com
+- Response time: 24-48 hours
+- 6 months of support included
 
-### Styling
+## 📅 Updates
 
-- Edit `tailwind.config.js` for theme customization
-- Modify component styles in their respective files
-- Update animations in Framer Motion components
-
-### Adding New Robots
-
-Add new robots in `/app/api/robots/route.ts`:
-\`\`\`typescript
-const robots = [
-  {
-    id: 1,
-    name: 'Your Robot',
-    manufacturer: 'Your Company',
-    // ... other fields
-  }
-];
-\`\`\`
-
-## 🔒 Security
-
-- Middleware for security headers
-- API route validation
-- Type-safe operations
-- Error boundaries
-
-## 📱 Responsive Design
-
-- Mobile-first approach
-- Breakpoints:
-  - sm: 640px
-  - md: 768px
-  - lg: 1024px
-  - xl: 1280px
-
-## 🚀 Performance
-
-- Image optimization
-- Code splitting
-- CSS optimization
-- Lazy loading
-
-## 💰 Pricing Recommendation
-
-Based on the features and quality, here's a suggested pricing structure:
-
-### Basic License: $499
-- Source code
-- Basic documentation
-- 3 months support
-- Single project use
-
-### Professional License: $999
-- Everything in Basic
-- 1 year support
-- Multiple project use
-- Priority support
-- Custom branding removal
-
-### Enterprise License: $2,499
-- Everything in Professional
-- Unlimited projects
-- Custom feature development
-- Direct developer access
-- SLA support
-- White-label rights
-
-### Value Justification:
-1. **Modern Tech Stack**: Uses latest technologies worth $5k+ in development time
-2. **UI/UX Design**: Professional design worth $3k+ in design costs
-3. **Animations**: Custom animations worth $2k+ in development
-4. **API Integration**: Full backend integration worth $4k+ in development
-5. **Testing**: Comprehensive testing setup worth $2k+ in development
-6. **Documentation**: Detailed documentation worth $1k+ in technical writing
-
-Total Development Value: ~$17,000
-
-## 🤝 Support
-
-For support, email: support@your-domain.com
+Regular updates including:
+- New features
+- Security patches
+- Performance improvements
+- Browser compatibility
+- Documentation updates
 
 ## 📄 License
 
-[Your License] - See LICENSE.md for details
+This template is licensed under the [ThemeForest Standard License](https://themeforest.net/licenses/standard).
+
+---
+
+For customization services or premium support, contact us at support@example.com

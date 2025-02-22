@@ -1,268 +1,202 @@
 'use client';
 
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { useRef } from 'react';
+import { motion } from 'framer-motion';
+import dynamic from 'next/dynamic';
+import Image from 'next/image';
 
-interface TimelineEvent {
-  year: string;
-  title: string;
-  description: string;
-  icon: string;
-  achievement: string;
-}
+const AnimatedBackground = dynamic(() => import('@/components/AnimatedBackground'), {
+  ssr: false,
+  loading: () => <div className="fixed inset-0 bg-black" />
+});
 
-const timeline: TimelineEvent[] = [
+const teamMembers = [
   {
-    year: "2120",
-    title: "Quantum Breakthrough",
-    description: "First successful integration of quantum consciousness into robotic systems.",
-    icon: "🧠",
-    achievement: "Neural Density: 1 trillion connections/nm³"
+    name: 'Dr. Sarah Chen',
+    role: 'Chief Robotics Officer',
+    image: '/images/placeholder-robot.svg',
+    description: 'Leading expert in quantum robotics and AI integration'
   },
   {
-    year: "2122",
-    title: "Dark Matter Harnessing",
-    description: "Revolutionary power source utilizing dark matter for infinite energy generation.",
-    icon: "⚡",
-    achievement: "Power Output: ∞ TeraWatts"
+    name: 'Prof. James Wilson',
+    role: 'Head of Research',
+    image: '/images/placeholder-robot.svg',
+    description: 'Pioneer in neural interface systems and robotic consciousness'
   },
   {
-    year: "2123",
-    title: "Molecular Engineering",
-    description: "Development of self-repairing quantum-molecular structures.",
-    icon: "🔮",
-    achievement: "Precision: 0.00001 angstroms"
-  },
-  {
-    year: "2124",
-    title: "Time Manipulation",
-    description: "Breakthrough in quantum time dilation for enhanced processing capabilities.",
-    icon: "⌛",
-    achievement: "Processing Speed: 1 YottaFLOP/ns"
-  },
-  {
-    year: "2125",
-    title: "Present Day",
-    description: "Leading the revolution in quantum-powered robotics and AI systems.",
-    icon: "🚀",
-    achievement: "Market Share: 99.99%"
+    name: 'Dr. Maya Patel',
+    role: 'Lead Engineer',
+    image: '/images/placeholder-robot.svg',
+    description: 'Specialist in nano-robotics and swarm intelligence'
   }
 ];
 
-const AboutPage = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end start"]
-  });
+const achievements = [
+  { number: '100+', label: 'Patents Filed' },
+  { number: '50M+', label: 'Lines of Code' },
+  { number: '1000+', label: 'Robots Deployed' },
+  { number: '30+', label: 'Countries Served' }
+];
 
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2,
+      delayChildren: 0.3
+    }
+  }
+};
 
+const itemVariants = {
+  hidden: { y: 20, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      type: 'spring',
+      stiffness: 100
+    }
+  }
+};
+
+const numberAnimation = {
+  hidden: { opacity: 0, scale: 0.5 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: {
+      type: 'spring',
+      stiffness: 100,
+      duration: 0.8
+    }
+  }
+};
+
+export default function AboutPage() {
   return (
-    <div ref={containerRef} className="min-h-screen bg-cyber-darker relative overflow-hidden">
-      {/* Background Effects */}
-      <div className="absolute inset-0 bg-cyber-grid opacity-10"></div>
-      <motion.div 
-        className="absolute inset-0 bg-gradient-to-b from-cyber-darker via-cyber-dark to-cyber-darker"
-        style={{ y }}
-      ></motion.div>
+    <main className="min-h-screen bg-gradient-to-b from-gray-900 to-black text-white">
+      <AnimatedBackground />
 
-      {/* Quantum Particles */}
-      <div className="absolute inset-0 pointer-events-none">
-        {[...Array(30)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 rounded-full"
-            style={{
-              background: `rgba(${Math.random() * 255}, ${Math.random() * 255}, 255, 0.5)`,
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, -30, 0],
-              x: [0, Math.random() * 20 - 10, 0],
-              scale: [1, 1.5, 1],
-              opacity: [0.2, 0.5, 0.2],
-            }}
-            transition={{
-              duration: Math.random() * 3 + 2,
-              repeat: Infinity,
-              ease: "linear",
-            }}
-          />
-        ))}
-      </div>
-
-      <div className="container mx-auto px-4 py-32 relative z-10">
-        {/* Hero Section */}
+      {/* Hero Section */}
+      <section className="relative min-h-[60vh] flex items-center justify-center px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-20"
+          className="text-center z-10 max-w-4xl mx-auto"
         >
-          <h1 className="text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-neon-blue via-neon-purple to-neon-pink animate-shimmer">
-            Shaping the Future
-          </h1>
-          <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-            Pioneering quantum robotics and AI technology since 2120
-          </p>
+          <motion.h1
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="text-5xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500"
+          >
+            Pioneering the Future
+          </motion.h1>
+          <motion.p
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="text-xl text-gray-300 mb-8"
+          >
+            We're a team of visionaries, engineers, and innovators working to transform the world of robotics
+          </motion.p>
         </motion.div>
+      </section>
 
-        {/* Vision Section */}
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-32"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-        >
-          <div className="glass-panel p-8 relative overflow-hidden">
-            <div className="absolute inset-0 bg-hologram-texture animate-hologram opacity-30"></div>
-            <div className="relative z-10">
-              <h2 className="text-3xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-neon-blue to-neon-purple">
-                Our Vision
-              </h2>
-              <p className="text-gray-300 mb-6">
-                To revolutionize human potential through quantum-powered robotics and artificial intelligence, creating a future where the boundaries between human capability and technological advancement cease to exist.
-              </p>
-              <div className="grid grid-cols-2 gap-4">
-                {[
-                  { label: "Founded", value: "2120" },
-                  { label: "Global Presence", value: "All Dimensions" },
-                  { label: "Team Size", value: "10,000+" },
-                  { label: "Patents", value: "∞" }
-                ].map((stat, index) => (
-                  <div key={index} className="p-4 bg-cyber-dark/50 rounded-lg">
-                    <div className="text-sm text-gray-400">{stat.label}</div>
-                    <div className="text-xl font-bold text-neon-blue">{stat.value}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <div className="glass-panel p-8 relative overflow-hidden">
-            <div className="absolute inset-0 bg-hologram-texture animate-hologram opacity-30"></div>
-            <div className="relative z-10">
-              <h2 className="text-3xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-neon-blue to-neon-purple">
-                Our Mission
-              </h2>
-              <p className="text-gray-300 mb-6">
-                To push the boundaries of what's possible by combining quantum computing, artificial intelligence, and robotics into seamless solutions that enhance human life across all dimensions.
-              </p>
-              <div className="space-y-4">
-                {[
-                  "Quantum Innovation Leadership",
-                  "Universal Accessibility",
-                  "Dimensional Integration",
-                  "Sustainable Future"
-                ].map((value, index) => (
-                  <div key={index} className="flex items-center space-x-3">
-                    <div className="w-2 h-2 bg-neon-purple rounded-full"></div>
-                    <span className="text-gray-300">{value}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Timeline Section */}
-        <motion.div
-          className="mb-32"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-        >
-          <h2 className="text-4xl font-bold text-center mb-16 bg-clip-text text-transparent bg-gradient-to-r from-neon-blue to-neon-purple">
-            Our Journey Through Time
-          </h2>
-          <div className="relative">
-            {/* Timeline Line */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-px bg-gradient-to-b from-neon-blue via-neon-purple to-neon-pink"></div>
-
-            {/* Timeline Events */}
-            <div className="space-y-24">
-              {timeline.map((event, index) => (
-                <motion.div
-                  key={index}
-                  className={`relative flex items-center ${
-                    index % 2 === 0 ? 'justify-start' : 'justify-end'
-                  }`}
-                  initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.2 * index }}
-                >
-                  <div className={`w-1/2 ${index % 2 === 0 ? 'pr-12' : 'pl-12'}`}>
-                    <div className="glass-panel p-6 relative overflow-hidden">
-                      <div className="absolute inset-0 bg-hologram-texture animate-hologram opacity-30"></div>
-                      <div className="relative z-10">
-                        <div className="text-4xl mb-4">{event.icon}</div>
-                        <div className="text-neon-blue font-bold mb-2">{event.year}</div>
-                        <h3 className="text-xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-neon-blue to-neon-purple">
-                          {event.title}
-                        </h3>
-                        <p className="text-gray-300 mb-4">{event.description}</p>
-                        <div className="text-sm text-neon-green">{event.achievement}</div>
-                      </div>
-                    </div>
-                  </div>
-                  {/* Timeline Node */}
-                  <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-neon-purple rounded-full border-4 border-cyber-darker"></div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Team Section */}
-        <motion.div
-          className="text-center"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
-        >
-          <h2 className="text-4xl font-bold mb-16 bg-clip-text text-transparent bg-gradient-to-r from-neon-blue to-neon-purple">
-            Leading the Quantum Revolution
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                role: "Quantum Research",
-                stat: "1,000+ Scientists",
-                icon: "🔬"
-              },
-              {
-                role: "Robot Engineering",
-                stat: "5,000+ Engineers",
-                icon: "🤖"
-              },
-              {
-                role: "AI Development",
-                stat: "4,000+ Developers",
-                icon: "💻"
-              }
-            ].map((team, index) => (
-              <motion.div
-                key={index}
-                className="glass-panel p-8 relative overflow-hidden"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 * index }}
+      {/* Achievements Section */}
+      <motion.section
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        className="py-20 px-4"
+      >
+        <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
+          {achievements.map((achievement) => (
+            <motion.div
+              key={achievement.label}
+              variants={numberAnimation}
+              className="text-center"
+            >
+              <motion.h3
+                className="text-4xl md:text-5xl font-bold text-blue-500"
+                initial={{ opacity: 0, scale: 0.5 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ type: 'spring', stiffness: 100, duration: 0.8 }}
               >
-                <div className="absolute inset-0 bg-hologram-texture animate-hologram opacity-30"></div>
-                <div className="relative z-10">
-                  <div className="text-4xl mb-4">{team.icon}</div>
-                  <div className="text-xl font-bold text-neon-blue mb-2">{team.role}</div>
-                  <div className="text-gray-300">{team.stat}</div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-      </div>
-    </div>
-  );
-};
+                {achievement.number}
+              </motion.h3>
+              <p className="text-gray-400 mt-2">{achievement.label}</p>
+            </motion.div>
+          ))}
+        </div>
+      </motion.section>
 
-export default AboutPage;
+      {/* Team Section */}
+      <motion.section
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        className="py-20 px-4"
+      >
+        <h2 className="text-4xl font-bold text-center mb-12 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500">
+          Our Team
+        </h2>
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+          {teamMembers.map((member) => (
+            <motion.div
+              key={member.name}
+              variants={itemVariants}
+              whileHover={{ scale: 1.05 }}
+              className="bg-gray-800/50 backdrop-blur-lg rounded-xl p-6 text-center"
+            >
+              <motion.div
+                whileHover={{ rotate: 360 }}
+                transition={{ duration: 1 }}
+                className="w-32 h-32 mx-auto mb-4 relative"
+              >
+                <Image
+                  src={member.image}
+                  alt={member.name}
+                  fill
+                  className="rounded-full object-cover"
+                />
+              </motion.div>
+              <h3 className="text-xl font-semibold mb-2">{member.name}</h3>
+              <p className="text-blue-400 mb-4">{member.role}</p>
+              <p className="text-gray-400">{member.description}</p>
+            </motion.div>
+          ))}
+        </div>
+      </motion.section>
+
+      {/* Vision Section */}
+      <motion.section
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1 }}
+        className="py-20 px-4 bg-gradient-to-r from-blue-900/20 to-purple-900/20 backdrop-blur-lg"
+      >
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-4xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500">
+            Our Vision
+          </h2>
+          <motion.p
+            initial={{ y: 20, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-xl text-gray-300"
+          >
+            We envision a world where humans and robots work together seamlessly, enhancing our capabilities and pushing the boundaries of what's possible. Through continuous innovation and ethical development, we're building that future today.
+          </motion.p>
+        </div>
+      </motion.section>
+    </main>
+  );
+}

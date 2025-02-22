@@ -1,263 +1,161 @@
 'use client';
 
-import { motion, AnimatePresence } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { useRef } from 'react';
 import Image from 'next/image';
-import RobotCard from './RobotCard';
-import { useRobotStore } from '../store/robotStore';
 
 interface Robot {
   id: number;
   name: string;
-  manufacturer: string;
-  price: string;
   description: string;
-  features: string[];
   image: string;
-  status: string;
+  specs: {
+    height: string;
+    weight: string;
+    speed: string;
+    battery: string;
+  };
 }
 
-const robotsData: Robot[] = [
+const robots: Robot[] = [
   {
     id: 1,
-    name: 'Tesla Optimus Gen 2',
-    manufacturer: 'Tesla',
-    price: '$20,000',
-    description: 'Humanoid robot designed for general purpose tasks. Features advanced AI and natural movement.',
-    features: [
-      'Adaptive AI Learning',
-      'Human-like Movement',
-      'Advanced Dexterity',
-      'Voice Recognition',
-      'Safety Protocols'
-    ],
-    image: '/images/placeholder-robot.svg',
-    status: 'Pre-order'
+    name: 'Atlas Pro',
+    description: 'Advanced humanoid robot capable of complex movements and tasks',
+    image: '/robots/atlas.jpg',
+    specs: {
+      height: '1.5m',
+      weight: '80kg',
+      speed: '5.2m/s',
+      battery: '4 hours'
+    }
   },
   {
     id: 2,
-    name: 'Spot Enterprise',
-    manufacturer: 'Boston Dynamics',
-    price: '$75,000',
-    description: 'Agile mobile robot for industrial inspection and data collection.',
-    features: [
-      'All-terrain Mobility',
-      'Remote Operation',
-      'Autonomous Navigation',
-      'Customizable Payloads',
-      '360° Perception'
-    ],
-    image: '/images/placeholder-robot.svg',
-    status: 'In Stock'
+    name: 'Nexus',
+    description: 'Industrial automation robot with precision control',
+    image: '/robots/nexus.jpg',
+    specs: {
+      height: '1.8m',
+      weight: '120kg',
+      speed: '3.0m/s',
+      battery: '8 hours'
+    }
   },
   {
     id: 3,
-    name: 'Atlas Pro',
-    manufacturer: 'Boston Dynamics',
-    price: 'Contact for Price',
-    description: 'Advanced humanoid robot capable of dynamic movement and complex tasks.',
-    features: [
-      'Parkour Capability',
-      'Object Manipulation',
-      'Dynamic Balance',
-      'Task Learning',
-      'Sensor Integration'
-    ],
-    image: '/images/placeholder-robot.svg',
-    status: 'Coming Soon'
-  },
-  {
-    id: 4,
-    name: 'Ameca',
-    manufacturer: 'Engineered Arts',
-    price: '$150,000',
-    description: 'The world\'s most advanced human-shaped robot, featuring unprecedented facial expressions and human-like interaction.',
-    features: [
-      'Natural Facial Expressions',
-      'Advanced Social Interaction',
-      'Emotional Recognition',
-      'Gesture Control',
-      'Multi-language Support'
-    ],
-    image: '/images/placeholder-robot.svg',
-    status: 'In Stock'
-  },
-  {
-    id: 5,
-    name: 'Stretch',
-    manufacturer: 'Boston Dynamics',
-    price: '$65,000',
-    description: 'Mobile robot designed for warehouse automation and box moving.',
-    features: [
-      'Smart Gripper Technology',
-      'Mobile Base',
-      'Computer Vision',
-      'Case Handling',
-      'Autonomous Operation'
-    ],
-    image: '/images/placeholder-robot.svg',
-    status: 'In Stock'
-  },
-  {
-    id: 6,
-    name: 'Digit',
-    manufacturer: 'Agility Robotics',
-    price: '$250,000',
-    description: 'Bipedal robot designed for logistics and last-mile delivery.',
-    features: [
-      'Bipedal Locomotion',
-      'Package Handling',
-      'Stairs Navigation',
-      'Human Environment Operation',
-      'Long Battery Life'
-    ],
-    image: '/images/placeholder-robot.svg',
-    status: 'Pre-order'
+    name: 'Scout Mini',
+    description: 'Compact surveillance and reconnaissance robot',
+    image: '/robots/scout.jpg',
+    specs: {
+      height: '0.5m',
+      weight: '15kg',
+      speed: '8.0m/s',
+      battery: '6 hours'
+    }
   }
 ];
 
 export default function RobotShowcase() {
-  const { robots, selectedRobot, selectRobot, isLoading, fetchRobots } = useRobotStore();
-  const [isHovered, setIsHovered] = useState(false);
-
-  useEffect(() => {
-    if (robots.length === 0) {
-      fetchRobots().then(() => {
-        const firstRobot = useRobotStore.getState().robots[0];
-        if (firstRobot) {
-          selectRobot(firstRobot);
-        }
-      });
-    }
-  }, [robots.length, fetchRobots, selectRobot]);
-
-  if (isLoading || !selectedRobot) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-500" />
-      </div>
-    );
-  }
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start end', 'end start']
+  });
 
   return (
-    <section className="py-20 overflow-hidden" aria-labelledby="showcase-title">
-      <div className="container mx-auto px-4">
+    <div ref={containerRef} className="py-20 bg-gradient-to-b from-gray-900 to-black">
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+      >
         <motion.h2
-          id="showcase-title"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-4xl md:text-5xl font-bold text-center mb-16"
+          viewport={{ once: true }}
+          className="text-4xl md:text-5xl font-bold text-center mb-16 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500"
         >
-          <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-            Featured Robots
-          </span>
+          Our Robotic Innovation
         </motion.h2>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Robot Cards Carousel */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="relative"
-            role="region"
-            aria-label="Robot Selection"
-          >
-            <div 
-              className="grid grid-cols-2 md:grid-cols-3 gap-6"
-              role="listbox"
-              aria-label="Available Robots"
-            >
-              {robots.map((robot, index) => (
-                <motion.div
-                  key={robot.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  role="option"
-                  aria-selected={selectedRobot.id === robot.id}
-                >
-                  <RobotCard
-                    name={robot.name}
-                    image={robot.image}
-                    status={robot.status}
-                    onClick={() => selectRobot(robot)}
-                    isSelected={selectedRobot.id === robot.id}
-                  />
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* Robot Details */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="space-y-8"
-            role="region"
-            aria-label="Selected Robot Details"
-          >
-            <AnimatePresence mode="wait">
+        <div className="space-y-32">
+          {robots.map((robot, index) => {
+            const isEven = index % 2 === 0;
+            return (
               <motion.div
-                key={selectedRobot.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.5 }}
-                className="bg-gray-900/50 backdrop-blur-lg rounded-2xl p-8 border border-gray-800"
+                key={robot.id}
+                initial={{ opacity: 0, x: isEven ? -50 : 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: '-100px' }}
+                transition={{ duration: 0.8, type: 'spring' }}
+                className={`flex flex-col ${isEven ? 'md:flex-row' : 'md:flex-row-reverse'} items-center gap-8 md:gap-16`}
               >
-                <h3 className="text-3xl font-bold text-blue-400 mb-2">
-                  {selectedRobot.name}
-                </h3>
-                <p className="text-gray-400 mb-4">
-                  By {selectedRobot.manufacturer}
-                </p>
-                <p className="text-2xl font-bold text-white mb-6">
-                  {selectedRobot.price}
-                </p>
-                <p className="text-gray-300 mb-8">
-                  {selectedRobot.description}
-                </p>
-
-                {/* Features */}
-                <div className="space-y-4">
-                  <h4 className="text-lg font-semibold text-blue-400">Key Features</h4>
-                  <ul className="grid grid-cols-1 md:grid-cols-2 gap-4" role="list">
-                    {selectedRobot.features.map((feature, index) => (
-                      <motion.li
-                        key={feature}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: index * 0.1 }}
-                        className="flex items-center space-x-2"
-                      >
-                        <div className="w-2 h-2 rounded-full bg-blue-400" aria-hidden="true" />
-                        <span className="text-gray-300">{feature}</span>
-                      </motion.li>
-                    ))}
-                  </ul>
+                <div className="w-full md:w-1/2">
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ type: 'spring', stiffness: 300 }}
+                    className="relative aspect-square rounded-2xl overflow-hidden bg-gradient-to-br from-blue-500/20 to-purple-500/20 p-1"
+                  >
+                    <Image
+                      src={robot.image}
+                      alt={robot.name}
+                      fill
+                      className="object-cover rounded-2xl"
+                    />
+                  </motion.div>
                 </div>
 
-                {/* Action Button */}
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="mt-8 w-full px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-xl font-semibold hover:from-blue-600 hover:to-purple-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900"
-                  aria-label={`${selectedRobot.status === 'In Stock' ? 'Order' : 
-                             selectedRobot.status === 'Pre-order' ? 'Pre-order' : 
-                             'Join Waitlist for'} ${selectedRobot.name}`}
-                >
-                  {selectedRobot.status === 'In Stock' ? 'Order Now' : 
-                   selectedRobot.status === 'Pre-order' ? 'Pre-order Now' : 
-                   'Join Waitlist'}
-                </motion.button>
+                <div className="w-full md:w-1/2 space-y-6">
+                  <motion.h3
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500"
+                  >
+                    {robot.name}
+                  </motion.h3>
+
+                  <motion.p
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    className="text-gray-300 text-lg"
+                  >
+                    {robot.description}
+                  </motion.p>
+
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    className="grid grid-cols-2 gap-4"
+                  >
+                    {Object.entries(robot.specs).map(([key, value]) => (
+                      <div
+                        key={key}
+                        className="p-4 rounded-lg bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm"
+                      >
+                        <p className="text-gray-400 text-sm capitalize">{key}</p>
+                        <p className="text-white font-semibold">{value}</p>
+                      </div>
+                    ))}
+                  </motion.div>
+
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="px-6 py-3 rounded-lg bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold hover:shadow-lg hover:shadow-blue-500/25 transition-shadow"
+                  >
+                    Learn More
+                  </motion.button>
+                </div>
               </motion.div>
-            </AnimatePresence>
-          </motion.div>
+            );
+          })}
         </div>
-      </div>
-    </section>
+      </motion.div>
+    </div>
   );
 }

@@ -1,19 +1,22 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { CSSProperties } from 'react';
 
 interface FloatingElementProps {
   children: React.ReactNode;
   delay?: number;
   duration?: number;
   className?: string;
+  style?: CSSProperties;
 }
 
 export default function FloatingElement({
   children,
   delay = 0,
   duration = 4,
-  className = ''
+  className = '',
+  style
 }: FloatingElementProps) {
   return (
     <motion.div
@@ -29,6 +32,7 @@ export default function FloatingElement({
         delay,
       }}
       className={className}
+      style={style}
     >
       {children}
     </motion.div>
